@@ -19,6 +19,7 @@ import { fileURLToPath } from "url";
  * @type {object}
  * @property {string} repo - Git repo and branch to clone
  * @property {string[]} paths - Paths to proto files relative to the repo root
+ * @property {string?} precloned - Path to precloned repo
  */
 
 /**
@@ -27,28 +28,44 @@ import { fileURLToPath } from "url";
  */
 const REPOS = [
   {
-    repo: "cosmos/cosmos-sdk#main",
+    repo: "cosmos/cosmos-sdk#v0.50.3",
     paths: ["proto"],
+    precloned: null 
   },
   {
-    repo: "cosmos/ics23#master",
+    repo: "cosmos/ics23#go/v0.10.0",
     paths: ["proto"],
+    precloned: null
   },
   {
-    repo: "cosmos/ibc-go#main",
+    repo: "cosmos/ibc-go#v8.0.0",
     paths: ["proto"],
+    precloned: null
   },
   {
-    repo: "CosmWasm/wasmd#main",
+    repo: "CosmWasm/wasmd#v0.50.0",
     paths: ["proto"],
+    precloned: null
   },
   {
     repo: "osmosis-labs/osmosis#main",
     paths: ["proto"],
+    precloned: null
   },
   {
     repo: "InjectiveLabs/sdk-go#master",
     paths: ["proto"],
+    precloned: null
+  },
+  {
+    repo: "initia-labs/initia#main",
+    paths: ["proto"],
+    precloned: "../initia",
+  },
+  {
+    repo: "initia-labs/OPinit#main",
+    paths: ["proto"],
+    precloned: "../OpInit",
   },
 ];
 
@@ -69,7 +86,18 @@ console.log("Initialising directories...");
 console.log("Cloning required repos...");
 {
   await Promise.all(
-    REPOS.map(({ repo }) => degit(repo).clone(join(TMP_DIR, id(repo))))
+    REPOS.map(async ({ repo, precloned }) => {
+      if (precloned != null) {
+        // copy precloned repo to TMP_DIR in async way
+        spawnSync("cp", ["-r", precloned, join(TMP_DIR, id(repo))], {
+          cwd: process.cwd(),
+          stdio: "inherit",
+        })
+      }
+      else {
+        await degit(repo).clone(join(TMP_DIR, id(repo)))
+      }
+    })
   );
 }
 

@@ -69,6 +69,8 @@ export interface Asset {
       svg?: string;
       theme?: {
         primary_color_hex?: string;
+        circle?: boolean;
+        dark_mode?: boolean;
       };
     },
     ...{
@@ -77,6 +79,8 @@ export interface Asset {
       svg?: string;
       theme?: {
         primary_color_hex?: string;
+        circle?: boolean;
+        dark_mode?: boolean;
       };
     }[]
   ];

@@ -50,11 +50,7 @@ export const MsgWithdrawValidatorCommissionService = {
  * FundCommunityPool defines a method to allow an account to directly
  * fund the community pool.
  *
- * Deprecated: Use x/protocolpool module's FundCommunityPool instead.
- * Since: cosmos-sdk 0.50
- *
  * @generated from rpc cosmos.distribution.v1beta1.Msg.FundCommunityPool
- * @deprecated
  */
 export const MsgFundCommunityPoolService = {
   typeName: TYPE_NAME,
@@ -84,8 +80,7 @@ export const MsgUpdateParamsService = {
  * could be the governance module itself. The authority is defined in the
  * keeper.
  *
- * Deprecated: Use x/protocolpool module's CommunityPoolSpend instead.
- * Since: cosmos-sdk 0.50
+ * Since: cosmos-sdk 0.47
  *
  * @generated from rpc cosmos.distribution.v1beta1.Msg.CommunityPoolSpend
  */
